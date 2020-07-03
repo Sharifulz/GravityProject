@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: MyHome
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: shariful
+Implementation-Vendor-Id: com.exam
+Build-Jdk: 1.8.0_91
+Implementation-URL: http://projects.spring.io/spring-boot/MyHome/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
