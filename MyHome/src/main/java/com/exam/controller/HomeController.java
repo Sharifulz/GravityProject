@@ -1,26 +1,31 @@
 package com.exam.controller;
 
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.exam.service.IProductService;
 
 @RestController
 public class HomeController {
 
+	@Autowired
+	IProductService productService;
+	
+	
 	@GetMapping("/")
 	public String welcome() {
 		System.out.println("Welcome called");
 		return "Welcome from Root";
 	}
 	
-	@GetMapping("/a1")
-	public String welcome1() {
-		System.out.println("Welcome called");
-		return "Welcome from home project, Day:1, Method:1";
+	@GetMapping("/product")
+	public Map<String, Object> getAllProduct() {
+		Map<String, Object> map = productService.getAllProductAndCustomer();
+		return map;
 	}
-	@GetMapping("/a2")
-	public String welcome2() {
-		System.out.println("Welcome called");
-		return "Welcome from home project, Day:1, Method:2";
-	}
+	
 	
 }
