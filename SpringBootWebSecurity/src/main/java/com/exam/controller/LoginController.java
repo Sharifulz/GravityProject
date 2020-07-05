@@ -13,7 +13,21 @@ public class LoginController {
 	
 	@GetMapping("/login")
 	public String login() {
-		return "login_page";
+		return "index";
+	}
+	
+	@GetMapping("/success")
+	public String successfulLogin() {
+		return "success";
 	}
 
+	@GetMapping("/user")
+	public String user() {
+		return "user";
+	}
+	
+	@GetMapping("/admin")
+	public String admin() {
+		return "admin";
+	}
 }
