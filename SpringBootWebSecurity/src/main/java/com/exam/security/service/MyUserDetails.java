@@ -2,10 +2,17 @@ package com.exam.security.service;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import javax.persistence.Column;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.exam.model.UsersModel;
 
 /*
  * Step 3: Make MyUserDetails which implements 
@@ -14,23 +21,31 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class MyUserDetails implements UserDetails {
 
-	public String userName;
+	private String userName;	
+
+	private String password;
+
+	private boolean active;	
+
+	private List<GrantedAuthority> authorities;;
 	
-	public MyUserDetails(String userName) {
-		this.userName = userName;
+	public MyUserDetails(UsersModel user) {
+		this.userName = user.getUserName();
+		this.password = user.getPassword();
+		this.active = user.isActive();
+		this.authorities = Arrays.stream(user.getRoles().split(","))
+				.map(SimpleGrantedAuthority::new)
+				.collect(Collectors.toList());
 	}
-	
-	public MyUserDetails() {
-	}
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		return authorities;
 	}
 
 	@Override
 	public String getPassword() {
-		return "pass";
+		return password;
 	}
 
 	@Override
@@ -55,7 +70,8 @@ public class MyUserDetails implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return active;
 	}
-
+	
+	
 }

@@ -50,6 +50,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	        .clearAuthentication(true)
 	        .logoutSuccessUrl("/")
 	        .permitAll()
+	    .and()
+	    	.exceptionHandling().accessDeniedPage("/noaccess")
         .and()
 	        .csrf()
 	        .disable();

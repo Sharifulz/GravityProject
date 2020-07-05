@@ -1,0 +1,195 @@
+ 
+Starting Spring Security Project Step By Step
+Step 1: Initialize project ---------------------------------------------------
+1.  Create a spring project from https://start.spring.io
+    Add Dependency : JPA, Devtools, Spring Security, Postgresql, Web
+    Download , extract and open the project on eclipse/sts4, then update maven.
+
+
+2. Add application.properties, enable port and database configuration
+
+3. Run the project, you get a login page at @---> http://localhost:8080
+
+Step 2: Configure project ---------------------------------------------------
+
+1. Create a custom class like SecurityConfiguration.java that extends WebSecurityConfigurerAdapter
+2. Override two method:
+	(1)------> protected void configure(AuthenticationManagerBuilder auth) throws Exception
+			This will use for Authentication. 
+			This will call userDetailsService from org.springframework.security.core.userdetails.UserDetailsService;
+
+			@Override
+			protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+				auth.userDetailsService(userDetailsService);
+			}
+
+
+	(2)------> protected void configure(HttpSecurity http) throws Exception
+			This method will define what are the action of url and path
+			@Override
+			protected void configure(HttpSecurity http) throws Exception {
+				http.authorizeRequests()
+					.antMatchers("/admin").hasRole("ADMIN")
+					.antMatchers("/user").hasAnyRole("ADMIN", "USER")
+					.antMatchers("/").permitAll()
+					.anyRequest().authenticated()
+		        .and()
+			        .formLogin()
+			        .loginPage("/login")
+			        .defaultSuccessUrl("/index")
+			        .permitAll()
+		        .and()
+			        .logout()
+			        .invalidateHttpSession(true)
+			        .clearAuthentication(true)
+			        .logoutSuccessUrl("/")
+			        .permitAll()
+			    .and()
+			    	.exceptionHandling().accessDeniedPage("/noaccess")
+		        .and()
+			        .csrf()
+			        .disable();
+			}
+
+
+3. Create @Bean for password encoding: 
+		@Bean
+		public PasswordEncoder getPAsswordEncoder() {
+			return NoOpPasswordEncoder.getInstance();
+		}
+
+Step 3: Create MyUserDetailsService ---------------------------------------------------
+
+	1. Create a custom class like MyUserDetailsService which implements UserDetailsService 
+	   from import org.springframework.security.core.userdetails.UserDetailsService; 
+
+	2. Override loadUserByUsername , give username and call dao method to get user using JPA
+		@Override
+		public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+			Optional<UsersModel> user = userRepo.findByUserName(username);
+			user.orElseThrow(()->new UsernameNotFoundException("Not Found : "+ username));
+			return user.map(MyUserDetails::new).get();
+		}
+
+	3. User table :
+
+	@Entity
+	@Table(name = "users")
+	public class UsersModel{
+
+	 	@Id
+		@GeneratedValue(strategy = GenerationType.AUTO)
+		@Column(name = "id")
+		private int id;	
+
+
+		@Column(name = "username")
+		private String userName;	
+
+		@Column(name = "password")
+		private String password;
+
+		@Column(name = "active")
+		private boolean active;	
+
+		@Column(name = "roles")
+		private String roles;
+	}
+
+	4. Dao Repository:
+
+	@Repository
+	public interface IUsersDao extends JpaRepository<UsersModel, Integer> {
+		
+		Optional<UsersModel> findByUserName(String userName);
+		
+	}
+
+
+Step 4: Login Controller ---------------------------------------------------
+
+@Controller
+public class LoginController {
+
+	@GetMapping("/")
+	public String home() {
+		return "index";
+	}
+	
+	@GetMapping("/login")
+	public String login() {
+		return "index";
+	}
+	
+	@GetMapping("/index")
+	public String successfulLogin() {
+		return "index";
+	}
+
+	@GetMapping("/user")
+	public String user() {
+		return "user";
+	}
+	
+	@GetMapping("/admin")
+	public String admin() {
+		return "admin";
+	}
+	
+	
+	@GetMapping("/noaccess")
+	public String noaccess() {
+		return "noaccess";
+	}
+	
+	@GetMapping("/error")
+	public String error() {
+		return "error";
+	}
+	
+}
+
+Step 5: Resource View Resolver ---------------------------------------------------
+
+@Configuration
+@EnableWebMvc
+public class MvcConfiguration extends WebMvcConfigurerAdapter{
+    @Bean
+    public ViewResolver getViewResolver() {
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        resolver.setPrefix("/WEB-INF/view/");
+        resolver.setSuffix(".html");
+        return resolver;
+    }
+
+    @Override
+    public void configureDefaultServletHandling(
+            DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }    
+}
+
+Step 6: Create view page  ---------------------------------------------------
+
+index.html
+login.html
+user.html
+admin.html
+
+Step 7: Tutorial Link  ---------------------------------------------------
+
+https://www.youtube.com/watch?v=TNt3GHuayXs&t=297s
+
+
+
+
+
+
+
+
+
+
+
+
+
+

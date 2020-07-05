@@ -16,9 +16,9 @@ public class LoginController {
 		return "index";
 	}
 	
-	@GetMapping("/success")
+	@GetMapping("/index")
 	public String successfulLogin() {
-		return "success";
+		return "index";
 	}
 
 	@GetMapping("/user")
@@ -30,4 +30,16 @@ public class LoginController {
 	public String admin() {
 		return "admin";
 	}
+	
+	
+	@GetMapping("/noaccess")
+	public String noaccess() {
+		return "noaccess";
+	}
+	
+	@GetMapping("/error")
+	public String error() {
+		return "error";
+	}
+	
 }
