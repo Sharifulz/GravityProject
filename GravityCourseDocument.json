@@ -1,0 +1,61 @@
+Day 1:
+
+pom.xml
+
+Day 2:
+
+Restaurent Business.
+
+Feature:
+User:
+1. Order
+2. Cancel Order
+3. Home/Percel
+4. Discount
+5. Favourite
+6. Payment
+7.SMS, email
+Admin:
+1. Order/Product Management
+2. Quantity/Stock Management
+3. Reporting
+4. Dashboard
+
+
+
+System Design: Database design, Tool/Language
+Product, Order, Customer, Admin, Favourite, Report
+Denormalize: 
+
+
+End user:
+Android? Web? Both?
+Front-end back-end Saparate
+
+Rest request:
+Request url
+Header
+Body
+RequestParam 
+
+Annotation:
+
+Controller:
+------------------------------------------------
+@RestController
+@Controller
+@RequestMapping(value="/product",Method=GET, content-type=APPLICATION/JSON)
+@GetMapping("/product")
+@PostMapping
+@PutMapping
+@DeleteMaping
+
+@Autowired
+
+@Service
+@Repository
+@SpringBootApplication
+@Configuration
+@SpringMvcConfiguration
+
+

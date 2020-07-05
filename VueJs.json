@@ -1,0 +1,33 @@
+Day One:
+Tutorial:
+https://www.youtube.com/watch?v=4deVCNJq3qc
+
+VueJs Directives:
+
+v-model
+v-if
+v-else-if
+v-else
+v-show
+
+[Difference between v-if and v-show is v-if do not render value if the result is false, v-show render but not show if the result is false]
+
+v-bind:disabled
+:disabled
+:class="{red:email.length<2}"
+:class="[email.length<2?'red':'green']"
+
+{{email}} == <p v-text="email"/> == <p v-html="email"/>
+
+
+<p v-once>{{email}}</p> [bind only once , will not change]
+
+v-for
+<ul>
+	<li v-for="cat in cats">{{cat}}</li>
+</ul>
+
+v-on:click or @click
+v-on:keyup or @keyup.enter
+v-on:keydown or @keydown
+

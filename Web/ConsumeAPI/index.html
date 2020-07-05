@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <select name="mySelect" id="mySelect"></select>
+    <button id="show">GET CALL</button>
+
+    <script>
+      $(function () {
+        $("#show").click(function () {
+          $.get("http://localhost:9007/product", function (data, status) {
+            $.each(data.product, function (key, value) {
+              $("#mySelect").append(
+                $("<option></option>")
+                  .attr("value", key.prodName)
+                  .text(value.prodName)
+              );
+            });
+            console.log(data.product);
+            console.log(status);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
