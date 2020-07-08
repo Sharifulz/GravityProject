@@ -2,16 +2,31 @@ package com.exam.model;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Table(name = "tbl_customer")
+@Entity
 public class CustomerModel {
 
+	@Id
+	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	
+	@Column
 	private String custName;
-	
+	@Column
 	private String custFatherName;
-	
+	@Column
 	private String custMotherName;
-	
+	@Column
 	private int custAge;
-	
+	@Column
 	private Date custDOB;
 
 	public String getCustName() {

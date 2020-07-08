@@ -2,16 +2,32 @@ package com.exam.model;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Table(name = "tbl_product")
+@Entity
 public class ProductModel {
 	
+	@Id
+	@Column
+	private int id;
+	
+	@Column(name = "col_prod_name")
 	private String prodName;
 	
+	@Column
 	private String prodDesc;
 	
+	@Column
 	private int unitPrice;
 	
+	@Column
 	private Date buyingDate;
 	
+	@Column
 	private String prodCatagory;
 	
 	public String getProdName() {

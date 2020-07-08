@@ -26,6 +26,11 @@ public class LoginController {
 		return "user";
 	}
 	
+	@GetMapping("/user/profile")
+	public String userProfile() {
+		return "profile";
+	}
+	
 	@GetMapping("/admin")
 	public String admin() {
 		return "admin";

@@ -8,14 +8,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.exam.service.IProductService;
+import com.exam.service.ProductService;
 
 @RestController
 @CrossOrigin("*")
 public class HomeController {
 
 	@Autowired
-	IProductService productService;
-	
+	IProductService iproductService;
+	/*
+	 Controller --> Service --> Dao/Repository --> Query/Database
+	 ModelMapping --> Service--> Controller -- Front End
+	 */
 	
 	@GetMapping("/")
 	public String welcome() {
@@ -25,7 +29,7 @@ public class HomeController {
 	
 	@GetMapping("/product")
 	public Map<String, Object> getAllProduct() {
-		Map<String, Object> map = productService.getAllProductAndCustomer();
+		Map<String, Object> map = iproductService.getAllProductAndCustomer();
 		return map;
 	}
 	
