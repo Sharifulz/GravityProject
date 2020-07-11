@@ -20,7 +20,15 @@ public class HomeController {
 	 Controller --> Service --> Dao/Repository --> Query/Database
 	 ModelMapping --> Service--> Controller -- Front End
 	 */
-	
+	/*
+	step1. add driver on pom.xml
+	step2. application.properties
+	step3. create entiry model
+	step4. create jpa reposiroty, annotate as @Repository
+	step5. create service interface and implementation
+	step6. annotate repository and call findAll method
+	step7. annotate service and call from controller
+	*/
 	@GetMapping("/")
 	public String welcome() {
 		System.out.println("Welcome called");
