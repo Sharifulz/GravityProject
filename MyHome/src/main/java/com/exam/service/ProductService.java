@@ -1,46 +1,38 @@
 package com.exam.service;
 
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.exam.model.CustomerModel;
+import com.exam.dao.IProductDao;
 import com.exam.model.ProductModel;
+
 @Service
 public class ProductService implements IProductService {
 
+	@Autowired
+	IProductDao productDao;
+	 
 	@Override
-	public Map<String, Object> getAllProductAndCustomer() {
+	public Map<String, Object> saveProduct(List<ProductModel> productList) {
 		Map<String, Object> map = new HashMap<>();
-		
-		List<ProductModel>  list1 = Arrays.asList(new ProductModel("Soap", 
-				"Lux Soap is best", 50, 
-				new Date(System.currentTimeMillis()), "SOAP"),new ProductModel("Milk", 
-						"Fresh Milk is best", 100, 
-						new Date(System.currentTimeMillis()), "MILK"));
-		
-		
-		List<CustomerModel>  list2 = new ArrayList<CustomerModel>();
+		List<ProductModel> list = new ArrayList<>();
+		productList.forEach(prod->{
+			list.add(productDao.save(prod));
+		});
+		map.put("list", list);
+		return map;
+	}
 
-		
-		CustomerModel cust1 = new CustomerModel("Shariful Islam", 
-				"Shafiqul Islam", "Aklima Begum", 25, 
-				new Date(System.currentTimeMillis()));
-		
-		CustomerModel cust2 = new CustomerModel("Ariful Islam", 
-				"Afiqul Islam", "Lima Begum", 25, 
-				new Date(System.currentTimeMillis()));
-		
-		list2.add(cust1);
-		list2.add(cust1);
-		
-		map.put("product", list1);
-		map.put("customer", list2);
+	@Override
+	public Map<String, Object> getAllProduct() {
+		Map<String, Object> map = new HashMap<>();
+		List<ProductModel> list = productDao.findAll();
+		map.put("list", list);
 		return map;
 	}
 
