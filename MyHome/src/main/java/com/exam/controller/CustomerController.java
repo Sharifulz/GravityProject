@@ -10,25 +10,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.exam.model.ProductModel;
-import com.exam.service.IProductService;
+import com.exam.model.CustomerModel;
+import com.exam.service.ICustomerService;
 
 @RestController
-@RequestMapping("/product")
-public class ProductController {
+@RequestMapping("/customer")
+public class CustomerController {
 
 	@Autowired
-	IProductService productService;
+	ICustomerService customerService;
 	
 	@PostMapping("/add")
-	public Map<String, Object> saveProduct(@RequestBody List<ProductModel> productList){
-		Map<String, Object> map =productService.saveProduct(productList);
+	public Map<String, Object> saveCustomer(@RequestBody List<CustomerModel> customerList){
+		Map<String, Object> map =customerService.saveCustomers(customerList);
 		return map;
 	}
 	
 	@GetMapping("/getAll")
-	public Map<String, Object> getAllProduct(){
-		Map<String, Object> map =productService.getAllProduct();
+	public Map<String, Object> getAllCustomers(){
+		Map<String, Object> map =customerService.getAllCustomers();
 		return map;
 	}
 	

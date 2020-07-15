@@ -37,8 +37,14 @@ public class OrdersModel {
 	private int quantity;
 	
 	@Column(name = "total")
-	private int total;
+	private double total;
 
+	@Column(name = "due_amt")
+	private double dueAmt;
+	
+	@Column(name = "paid_amt")
+	private double paidAmt;
+	
 	public int getId() {
 		return id;
 	}
@@ -95,12 +101,30 @@ public class OrdersModel {
 		this.quantity = quantity;
 	}
 
-	public int getTotal() {
+	
+
+	public double getTotal() {
 		return total;
 	}
 
-	public void setTotal(int total) {
+	public void setTotal(double total) {
 		this.total = total;
+	}
+
+	public double getDueAmt() {
+		return dueAmt;
+	}
+
+	public void setDueAmt(double dueAmt) {
+		this.dueAmt = dueAmt;
+	}
+
+	public double getPaidAmt() {
+		return paidAmt;
+	}
+
+	public void setPaidAmt(double paidAmt) {
+		this.paidAmt = paidAmt;
 	}
 
 	public OrdersModel() {}

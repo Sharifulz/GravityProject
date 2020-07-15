@@ -5,12 +5,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.exam.model.ProductModel;
+import com.exam.model.CustomerModel;
 
 @Repository
-public interface IProductDao extends JpaRepository<ProductModel, Integer>{
-	
-	@Query("FROM ProductModel WHERE id =:id")
-	ProductModel getProductById(@Param("id") int id);
-	
+public interface ICustomerDao extends JpaRepository<CustomerModel, Integer> {
+	@Query("FROM CustomerModel WHERE id =:id")
+	CustomerModel getCustomerById(@Param("id") int id);
 }
