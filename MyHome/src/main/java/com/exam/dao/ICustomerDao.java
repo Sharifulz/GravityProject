@@ -11,4 +11,8 @@ import com.exam.model.CustomerModel;
 public interface ICustomerDao extends JpaRepository<CustomerModel, Integer> {
 	@Query("FROM CustomerModel WHERE id =:id")
 	CustomerModel getCustomerById(@Param("id") int id);
+	
+	
+	CustomerModel findById(int id);
+	
 }

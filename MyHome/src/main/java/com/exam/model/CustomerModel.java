@@ -20,14 +20,21 @@ public class CustomerModel {
 	
 	@Column
 	private String custName;
+	
 	@Column
 	private String custFatherName;
+	
 	@Column
 	private String custMotherName;
+	
 	@Column
 	private int custAge;
+	
 	@Column
 	private Date custDOB;
+	
+	@Column
+	private boolean isActive;
 
 	public String getCustName() {
 		return custName;
@@ -69,12 +76,32 @@ public class CustomerModel {
 		this.custDOB = custDOB;
 	}
 
-	public CustomerModel(String custName, String custFatherName, String custMotherName, int custAge, Date custDOB) {
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	
+	public CustomerModel(int id, String custName, String custFatherName, String custMotherName, int custAge,
+			Date custDOB, boolean isActive) {
+		this.id = id;
 		this.custName = custName;
 		this.custFatherName = custFatherName;
 		this.custMotherName = custMotherName;
 		this.custAge = custAge;
 		this.custDOB = custDOB;
+		this.isActive = isActive;
 	}
 
 	public CustomerModel() {
