@@ -33,7 +33,7 @@ public class CustomerModel {
 	@Column
 	private Date custDOB;
 	
-	@Column
+	@Column(columnDefinition = "boolean default false")
 	private boolean isActive;
 
 	public String getCustName() {
