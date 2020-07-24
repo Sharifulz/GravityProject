@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.exam.dao.ICustomerDao;
 import com.exam.model.CustomerModel;
+import com.exam.service.IApiKeyService;
 import com.exam.service.ICustomerService;
 
 @RestController
@@ -29,32 +30,28 @@ public class CustomerController {
 	@Autowired
 	ICustomerDao customerDao;
 	
+	@Autowired
+	IApiKeyService apiService;
+	
 	@PostMapping("/add")
 	public Map<String, Object> saveCustomer(@RequestBody List<CustomerModel> customerList){
 		Map<String, Object> map =customerService.saveCustomers(customerList);
 		return map;
 	}
-	/*
-	table api_validate
-	id 
-	endpoint
-	api_key
-	1 getAll/{username} 123456789ABC
-	*/
-	
-	/*
-	@PutMapping(path="/user/update/{username}", consumes= "application/json", produces= "application/json")
-	public ResponseEntity<Map<String, Object>> updateUser(HttpServletRequest request, @RequestBody UsersModel user, @PathVariable("username") String username,
-			@RequestHeader("latLng") String latLng, @RequestParam("api_key") String api_key) {
-	*/
-	
+	// http://localhost:9007/customer/getAll/user11?api_key=GRAVITY123456
 	@GetMapping("/getAll/{username}")
 	public Map<String, Object> getAllCustomers(HttpServletRequest request, @PathVariable("username") String username, @RequestParam("api_key") String api_key){
-		System.out.println("Username : "+ username);
-		System.out.println("Api Key : "+ api_key);
-		//select * from api_validate where endpoint=getAll/{username} and api_key=api_key
-				
-		Map<String, Object> map =customerService.getAllCustomers();
+		Map<String, Object> map = new HashMap<>();
+		String endpoint = "getAll/{username}";
+		
+		boolean isValid = apiService.getByEndpointAndApiKey(endpoint, api_key);
+		
+		if (isValid) {
+			map =customerService.getAllCustomers();
+		}else {
+			map.put("result", "No such API key found");
+		}
+		
 		return map;
 	}
 	
