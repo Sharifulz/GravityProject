@@ -14,7 +14,7 @@ public class HomeController {
 	@Autowired
 	IProductService productService;
 	
-	@RequestMapping("/home")
+	@RequestMapping("/")
 	public String welcome(Map<String, Object> model) {
 		model.put("message", "HowToDoInJava Reader !!");
 		return "index";
