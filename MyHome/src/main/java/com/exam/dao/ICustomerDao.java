@@ -25,6 +25,8 @@ public interface ICustomerDao extends JpaRepository<CustomerModel, Integer> {
 	//custAge
 	List<CustomerModel> findByCustNameAndCustAge(String custName, int custAge);
 	
+	List<CustomerModel> findByUsername(String username);
+	
 	CustomerModel findById(int id);
 	
 }

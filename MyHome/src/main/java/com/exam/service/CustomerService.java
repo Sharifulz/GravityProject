@@ -36,4 +36,17 @@ public class CustomerService implements ICustomerService {
 		return map;
 	}
 
+	@Override
+	public Map<String, Object> getAllCustomersByUsername(String username) {
+		Map<String, Object> map = new HashMap<>();
+		List<CustomerModel> list = customerDao.findByUsername(username);
+		if (list.size()>0) {
+			map.put("list", list);
+		}else {
+			map.put("message", "No Such user found");
+		}
+		
+		return map;
+	}
+
 }

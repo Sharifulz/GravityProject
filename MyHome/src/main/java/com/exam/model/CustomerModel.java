@@ -22,6 +22,9 @@ public class CustomerModel {
 	private String custName;
 	
 	@Column
+	private String username;
+	
+	@Column
 	private String custFatherName;
 	
 	@Column
@@ -91,8 +94,15 @@ public class CustomerModel {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-
 	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public CustomerModel(int id, String custName, String custFatherName, String custMotherName, int custAge,
 			Date custDOB, boolean isActive) {
 		this.id = id;

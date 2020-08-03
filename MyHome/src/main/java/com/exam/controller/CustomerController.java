@@ -39,17 +39,17 @@ public class CustomerController {
 		return map;
 	}
 	// http://localhost:9007/customer/getAll/user11?api_key=GRAVITY123456
-	@GetMapping("/getAll/{username}")
+	@GetMapping("/getAllByUsername/{username}")
 	public Map<String, Object> getAllCustomers(HttpServletRequest request, @PathVariable("username") String username, @RequestParam("api_key") String api_key){
 		Map<String, Object> map = new HashMap<>();
-		String endpoint = "getAll/{username}";
+		String endpoint = "getAllByUsername/{username}";
 		
-		boolean isValid = apiService.getByEndpointAndApiKey(endpoint, api_key);
+		Map<String, Object> apiResult = apiService.getByEndpointAndApiKey(endpoint, api_key);
 		
-		if (isValid) {
-			map =customerService.getAllCustomers();
+		if (apiResult.get("result").equals(true)) {
+			map =customerService.getAllCustomersByUsername(username);
 		}else {
-			map.put("result", "No such API key found");
+			map.put("message", apiResult.get("message"));
 		}
 		
 		return map;

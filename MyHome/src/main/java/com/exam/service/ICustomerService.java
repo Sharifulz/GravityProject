@@ -8,4 +8,6 @@ import com.exam.model.CustomerModel;
 public interface ICustomerService { 
 	public Map<String, Object> saveCustomers(List<CustomerModel> customerList);
 	public Map<String, Object> getAllCustomers();
+	public Map<String, Object> getAllCustomersByUsername(String username);
+	
 }

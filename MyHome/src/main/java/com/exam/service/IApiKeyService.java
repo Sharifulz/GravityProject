@@ -1,7 +1,9 @@
 package com.exam.service;
 
+import java.util.Map;
+
 public interface IApiKeyService {
 
-	public boolean getByEndpointAndApiKey(String endpoint, String apiKey);
+	public Map<String, Object> getByEndpointAndApiKey(String endpoint, String apiKey);
 	
 }
