@@ -33,6 +33,8 @@ public class CustomerController {
 	@Autowired
 	IApiKeyService apiService;
 	
+	//---- 1. username must , 2. username can not have space ,
+	//3. username  must be unique and minimum 3 character
 	@PostMapping("/add")
 	public Map<String, Object> saveCustomer(@RequestBody List<CustomerModel> customerList){
 		Map<String, Object> map =customerService.saveCustomers(customerList);
@@ -67,6 +69,23 @@ public class CustomerController {
 	@GetMapping("/getByName")
 	public Map<String, Object> getCustomerByName(){
 		List<CustomerModel> customer = customerDao.findByCustNameAndCustAge("Json Smith",25);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("customer", customer);
+		return map;
+	}
+	@GetMapping("/getByAgeDistinct")
+	public Map<String, Object> getByAgeDistinct(){
+		List<Object[]> customer = customerDao.getDistinctCustomerByCustomerAge(25);
+		System.out.println("-------------------------- "+customer.size());
+		//System.out.println("-------------------------- "+customer[0].toString());
+		//System.out.println("-------------------------- "+customer[1].toString());
+		for (int i = 0; i < customer.size(); i++) {
+			if (Integer.parseInt(customer.get(i)[0].toString())==25) {
+				System.out.println("Integer found");
+			}
+			System.out.println(customer.get(i)[0]+ " ------------ " + customer.get(i)[1]);
+		}
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("customer", customer);
