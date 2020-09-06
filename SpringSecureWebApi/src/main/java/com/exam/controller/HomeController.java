@@ -24,13 +24,14 @@ public class HomeController {
 	private AuthenticationManager authenticationManager;
 	
 	@Autowired 
-	MyUserDetailsService userDetailsService;
+	private MyUserDetailsService userDetailsService;
 	
 	@Autowired 
-	JwtUtil jwtUtil;
+	private JwtUtil jwtUtil;
 	
 	@GetMapping("/hello")
 	public String login() {
+		System.out.println("Hellow world page");
 		return "hellow world";
 	}
 	
@@ -44,7 +45,6 @@ public class HomeController {
 		}
 		
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authReqViewModel.getUserName());
-		
 		final String jwt = jwtUtil.generateToken(userDetails);
 		
 		return ResponseEntity.ok(new AuthenticationResponse(jwt));

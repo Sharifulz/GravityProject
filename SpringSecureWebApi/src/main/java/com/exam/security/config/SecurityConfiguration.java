@@ -9,9 +9,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.exam.jwtutil.JwtFilters;
+
 
 /*
  * Step 1: Make a configuration class that extends WebSecurityConfigurerAdapter
@@ -27,6 +32,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Autowired
 	UserDetailsService userDetailsService;
 	
+	 @Autowired
+	 private JwtFilters jwtFilters;
+	 
 	//--------- Authentication -------------------------------
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -36,28 +44,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	//--------- Authorization --------------------------------
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/authenticate").permitAll()
-			.antMatchers("/admin").hasRole("ADMIN")
-			.antMatchers("/user/*").hasAnyRole("ADMIN", "USER")
-			.antMatchers("/").permitAll()
-			.anyRequest().authenticated()
-        .and()
-	        .formLogin()
-	        .loginPage("/login")
-	        .defaultSuccessUrl("/index")
-	        .permitAll()
-        .and()
-	        .logout()
-	        .invalidateHttpSession(true)
-	        .clearAuthentication(true)
-	        .logoutSuccessUrl("/")
-	        .permitAll()
-	    .and()
-	    	.exceptionHandling().accessDeniedPage("/noaccess")
-        .and()
-	        .csrf()
-	        .disable();
+		http.csrf().disable()
+			.authorizeRequests()
+			.antMatchers("/authenticate","/").permitAll()
+			.anyRequest()
+            .authenticated()
+            .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    http.addFilterBefore(jwtFilters, UsernamePasswordAuthenticationFilter.class);
 	}
 	
 	@Bean
